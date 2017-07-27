@@ -1,5 +1,7 @@
 # OJS with MySQL
 #
+# version: 0.1
+#
 # Access via "http://localhost:8080"
 #   (or "http://$(docker-machine ip):8080" if using docker-machine)
 #
