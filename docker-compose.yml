@@ -8,8 +8,6 @@
 # Database username: ojs
 # Database password: ojs
 
-version: '0.1'
-
 services:
 
   ojs:
@@ -26,4 +24,3 @@ services:
       - MYSQL_DATABASE=ojs
       - MYSQL_USER=ojs
       - MYSQL_PASSWORD=ojs
-    restart: always
