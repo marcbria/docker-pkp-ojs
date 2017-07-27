@@ -1,0 +1,14 @@
+# docker-compose.yml
+ojs:
+  image: marcbria/pkp_ojs
+  ports:
+    - 80:80
+  links:
+    - mysql:db
+mysql:
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=ojs
+    - MYSQL_USER=ojs
+    - MYSQL_PASSWORD=ojs
