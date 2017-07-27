@@ -10,6 +10,8 @@
 # Database username: ojs
 # Database password: ojs
 
+version: '3.1'
+
 ojs:
   image: marcbria/pkp_ojs
   ports:
