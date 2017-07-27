@@ -12,17 +12,21 @@
 
 version: '3.1'
 
-ojs:
-  image: marcbria/pkp_ojs
-  ports:
-    - 8080:80
-  links:
-    - mysql:db
+services:
 
-mysql:
-  image: mysql
-  environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=ojs
-    - MYSQL_USER=ojs
-    - MYSQL_PASSWORD=ojs
+  ojs:
+    image: marcbria/pkp_ojs
+    ports:
+      - 8080:80
+    links:
+      - mysql:db
+    restart: always
+    
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ojs
+      - MYSQL_USER=ojs
+      - MYSQL_PASSWORD=ojs
+    restart: always
