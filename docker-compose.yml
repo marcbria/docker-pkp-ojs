@@ -10,19 +10,17 @@
 # Database username: ojs
 # Database password: ojs
 
-services:
+ojs:
+  image: marcbria/pkp_ojs
+  ports:
+    - 8080:80
+  links:
+    - mysql:db
 
-  ojs:
-    image: marcbria/pkp_ojs
-    ports:
-      - 8080:80
-    links:
-      - mysql:db
-    
-  mysql:
-    image: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=ojs
-      - MYSQL_USER=ojs
-      - MYSQL_PASSWORD=ojs
+mysql:
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=ojs
+    - MYSQL_USER=ojs
+    - MYSQL_PASSWORD=ojs
