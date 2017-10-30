@@ -15,7 +15,7 @@ RUN apt-get install git -y \
 RUN apt-get install nano net-tools
 
 # Environment:
-ENV OJS_BRANCH ${OJS_BRANCH:-ojs-stable-3_1_0}
+ENV OJS_BRANCH ${OJS_BRANCH:-ojs-stable-3_0_2}
 RUN echo Getting code from branch: $OJS_BRANCH
 
 # Get OJS code from GitHub
