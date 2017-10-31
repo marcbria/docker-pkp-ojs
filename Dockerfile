@@ -29,7 +29,8 @@ RUN cd lib/pkp \
 # Get mojo
 RUN mkdir -p /opt/mojo
 RUN git clone -v --progress -b docker --single-branch https://github.com/marcbria/mojo.git /opt/mojo
-RUN ln -s /opt/mojo/mojo.sh /usr/bin/mojo
+RUN ln -s /opt/mojo/scripts/mojo.sh /usr/bin/mojo
+RUN mv /opt/mojo/scripts/config.mojo.TEMPLATE /opt/mojo/scripts/config.mojo
 
 # Clean up
 RUN cd /var/www/html \
