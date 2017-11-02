@@ -15,16 +15,24 @@ RUN apt-get install git -y \
 RUN apt-get install nano net-tools
 
 # Environment:
-ENV OJS_BRANCH ${OJS_BRANCH:-ojs-stable-2_4_8}
-RUN echo Getting code from branch: $OJS_BRANCH
+ENV OJS_BRANCH ${OJS_BRANCH:-ojs-2.4.8}
+RUN echo Downloading code version: $OJS_BRANCH
+
+RUN mkdir -p /var/www/html 
+WORKDIR /var/www/html
+
+# Get OJS code from released tarball
+RUN curl -o ojs.tar.gz -SL http://pkp.sfu.ca/ojs/download/${OJS_BRANCH}.tar.gz \
+        && tar -xzf ojs.tar.gz -C /var/www/html --strip=1 \
+        && rm ojs.tar.gz \
+        && chown -R www-data:www-data /var/www/html
 
 # Get OJS code from GitHub
-RUN git clone -v --recursive --progress -b ${OJS_BRANCH} --single-branch https://github.com/pkp/ojs.git /var/www/html
+# RUN git clone -v --recursive --progress -b ${OJS_BRANCH} --single-branch https://github.com/pkp/ojs.git /var/www/html
 
-WORKDIR /var/www/html
-RUN cd lib/pkp \
-    && curl -sS https://getcomposer.org/installer | php \
-    && php composer.phar update 
+# RUN cd lib/pkp \
+#     && curl -sS https://getcomposer.org/installer | php \
+#     && php composer.phar update 
 
 # Get mojo
 RUN mkdir -p /opt/mojo
