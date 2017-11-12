@@ -4,6 +4,7 @@ LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 # PHP Dependencies
 RUN apt-get update \
     && apt-get install zlib1g-dev libxml2-dev -y \
+    && apt-get install php5-mysql -y \
     && docker-php-ext-install mysqli mysql zip soap
 
 # Cloning and Cleaning OJS and PKP-LIB git repositories
