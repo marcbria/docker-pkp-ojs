@@ -5,7 +5,7 @@ LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 RUN apt-get update \
     && apt-get install zlib1g-dev libxml2-dev -y \
     && apt-get install php5-mysql -y \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql \
+    && docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-install mysqli mysql zip soap
 
 # Cloning and Cleaning OJS and PKP-LIB git repositories
