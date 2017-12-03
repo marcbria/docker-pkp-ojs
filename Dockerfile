@@ -17,7 +17,7 @@ RUN apt-get install git -y \
 RUN apt-get install nano net-tools
 
 # Environment:
-ENV OJS_BRANCH ${OJS_BRANCH:-ojs-3.1.0}
+ENV OJS_BRANCH ${OJS_BRANCH:-ojs-3.1.0-1}
 RUN echo Downloading code version: $OJS_BRANCH
 
 RUN mkdir -p /var/www/html 
