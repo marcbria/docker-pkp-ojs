@@ -1,10 +1,10 @@
-FROM php:5.6-apache
+FROM php:7.2-apache
 LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 
 # PHP Dependencies
 RUN apt-get update \
     && apt-get install zlib1g-dev libxml2-dev -y \
-    && apt-get install php5.6-mysql -y \
+    && apt-get install php-mysql -y \
     && docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-install mysqli mysql zip soap
 
