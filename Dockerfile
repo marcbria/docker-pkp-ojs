@@ -82,3 +82,4 @@ CMD ["chown", "www-data:www-data", "/var/www"]
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 COPY default.htaccess /var/www/html/.htaccess
 RUN service apache2 restart 
+
