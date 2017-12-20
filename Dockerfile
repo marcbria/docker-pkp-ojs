@@ -15,7 +15,7 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache; \
 	docker-php-ext-install pdo pdo_mysql; \
-	docker-php-ext-install zip soap;
+	docker-php-ext-install zip
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 # MBR: Adding pdo, zip and soap support.
 
