@@ -4,7 +4,7 @@ LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 # PHP Dependencies
 RUN apt-get update \
     && apt-get install zlib1g-dev libxml2-dev -y \
-    && apt-get install php5-mysql -y \
+    && apt-get install php5.6-mysql -y \
     && docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-install mysqli mysql zip soap
 
@@ -21,10 +21,13 @@ ENV OJS_BRANCH ${OJS_BRANCH:-ojs-3.1.0-1}
 RUN echo Downloading code version: $OJS_BRANCH
 
 RUN mkdir -p /var/www/html 
+RUN mkdir -p /var/www/files 
 WORKDIR /var/www/html
 
 # A workarround for the permissions issue: https://github.com/docker-library/php/issues/222
 # RUN sed -ri 's/^www-data:x:82:82:/www-data:x:1000:50:/' /etc/passwd
+
+# A different workarround: Change alias (www-data) for user ID (33).
 
 # Get OJS code from released tarball
 RUN curl -o ojs.tar.gz -SL http://pkp.sfu.ca/ojs/download/${OJS_BRANCH}.tar.gz \
@@ -55,8 +58,7 @@ RUN cd /var/www/html \
 # Setting OJS
 RUN cp config.TEMPLATE.inc.php config.inc.php \
     && chmod ug+rw config.inc.php \
-    && mkdir -p /var/www/files/ \
-    && chown -R 33:33 /var/www/
+    && chown -R 33:33 /var/www
 
 # Setting Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
