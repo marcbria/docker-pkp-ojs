@@ -3,21 +3,28 @@ LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 
 # Taken from wordpress oficial image:
 # install the PHP extensions we need
+# RUN set -ex; \
+#        \
+#        apt-get update; \
+#        apt-get install -y \
+#                libjpeg-dev \
+#                libpng-dev \
+#        ; \
+#        rm -rf /var/lib/apt/lists/*; \
+#        \
+#        docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
+#        docker-php-ext-install gd mysqli opcache; \
+#        docker-php-ext-install pdo pdo_mysql; \
+#        docker-php-ext-install zip
+
 RUN set -ex; \
 	\
 	apt-get update; \
-	apt-get install -y \
-		libjpeg-dev \
-		libpng-dev \
-	; \
-	rm -rf /var/lib/apt/lists/*; \
-	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache; \
 	docker-php-ext-install pdo pdo_mysql; \
 	docker-php-ext-install zip
-# TODO consider removing the *-dev deps and only keeping the necessary lib* packages
-# MBR: Adding pdo, zip and soap support.
+# MBR: Adding pdo and zip support.
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
