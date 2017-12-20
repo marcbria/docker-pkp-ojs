@@ -23,11 +23,14 @@ RUN echo Downloading code version: $OJS_BRANCH
 RUN mkdir -p /var/www/html 
 WORKDIR /var/www/html
 
+# A workarround for the permissions issue: https://github.com/docker-library/php/issues/222
+# RUN sed -ri 's/^www-data:x:82:82:/www-data:x:1000:50:/' /etc/passwd
+
 # Get OJS code from released tarball
 RUN curl -o ojs.tar.gz -SL http://pkp.sfu.ca/ojs/download/${OJS_BRANCH}.tar.gz \
         && tar -xzf ojs.tar.gz -C /var/www/html --strip=1 \
         && rm ojs.tar.gz \
-        && chown -R www-data:www-data /var/www/html
+        && chown -R 33:33 /var/www/html
 
 # Get OJS code from GitHub
 # RUN git clone -v --recursive --progress -b ${OJS_BRANCH} --single-branch https://github.com/pkp/ojs.git /var/www/html
@@ -53,7 +56,7 @@ RUN cd /var/www/html \
 RUN cp config.TEMPLATE.inc.php config.inc.php \
     && chmod ug+rw config.inc.php \
     && mkdir -p /var/www/files/ \
-    && chown -R www-data:33 /var/www/
+    && chown -R 33:33 /var/www/
 
 # Setting Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
