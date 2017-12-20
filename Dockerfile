@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.1-apache
 LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 
 # Taken from wordpress oficial image:
