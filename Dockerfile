@@ -70,10 +70,10 @@ RUN cp config.TEMPLATE.inc.php config.inc.php \
 
 # A workarround for the permissions issue: https://github.com/docker-library/php/issues/222
 # RUN sed -ri 's/^www-data:x:82:82:/www-data:x:1000:50:/' /etc/passwd
-# An alternative:
-# RUN chown www-data:www-data /var/www
-# A different workarround: Change alias (www-data) for user ID (33). CMD instead of RUN.
-CMD ["chown", "www-data:www-data", "/var/www"]
+# An alternative: Use CMS instead of RUN
+# CMD ["chown", "www-data:www-data", "/var/www"]
+# A different workarround: Change alias (www-data) for user ID (33).
+RUN chown 33:33 /var/www
 
 # Get mojo
 # RUN mkdir -p /opt/mojo
@@ -88,4 +88,3 @@ COPY default.htaccess /var/www/html/.htaccess
 RUN ls -lisah /var/www
 
 RUN service apache2 restart 
-
