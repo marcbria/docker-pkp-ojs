@@ -73,7 +73,10 @@ RUN cp config.TEMPLATE.inc.php config.inc.php \
 # An alternative: Use CMS instead of RUN
 # CMD ["chown", "www-data:www-data", "/var/www"]
 # A different workarround: Change alias (www-data) for user ID (33).
-RUN chown 33:33 /var/www
+# RUN chown 33:33 /var/www
+# Other choice:
+RUN usermod -u 1000 www-data
+RUN chown www-data:www-data /var/www
 
 # Get mojo
 # RUN mkdir -p /opt/mojo
@@ -83,7 +86,7 @@ RUN chown 33:33 /var/www
 
 # Setting Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-COPY default.htaccess /var/www/html/.htaccess
+COPY --chown=www-data:www-data default.htaccess /var/www/html/.htaccess
 
 RUN ls -lisah /var/www
 
