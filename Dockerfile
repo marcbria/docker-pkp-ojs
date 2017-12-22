@@ -68,6 +68,18 @@ RUN cd /var/www/html \
 RUN cp config.TEMPLATE.inc.php config.inc.php \
     && chmod ug+rw config.inc.php 
 
+# Get mojo
+# RUN mkdir -p /opt/mojo
+# RUN git clone -v --progress -b docker --single-branch https://github.com/marcbria/mojo.git /opt/mojo
+# RUN ln -s /opt/mojo/scripts/mojo.sh /usr/bin/mojo
+# RUN mv /opt/mojo/scripts/config.mojo.TEMPLATE /opt/mojo/scripts/config.mojo
+
+# Setting Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# COPY --chown=www-data:www-data default.htaccess /var/www/html/.htaccess
+COPY default.htaccess /var/www/html/.htaccess
+
+
 # A workarround for the permissions issue: https://github.com/docker-library/php/issues/222
 # RUN sed -ri 's/^www-data:x:82:82:/www-data:x:1000:50:/' /etc/passwd
 # An alternative: Use CMS instead of RUN
@@ -77,16 +89,6 @@ RUN cp config.TEMPLATE.inc.php config.inc.php \
 # Other choice:
 RUN usermod -u 1000 www-data
 RUN chown www-data:www-data /var/www
-
-# Get mojo
-# RUN mkdir -p /opt/mojo
-# RUN git clone -v --progress -b docker --single-branch https://github.com/marcbria/mojo.git /opt/mojo
-# RUN ln -s /opt/mojo/scripts/mojo.sh /usr/bin/mojo
-# RUN mv /opt/mojo/scripts/config.mojo.TEMPLATE /opt/mojo/scripts/config.mojo
-
-# Setting Apache
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-COPY --chown=www-data:www-data default.htaccess /var/www/html/.htaccess
 
 RUN ls -lisah /var/www
 
