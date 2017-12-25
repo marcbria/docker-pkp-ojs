@@ -33,7 +33,8 @@ RUN apt-get install nano net-tools
 
 # Environment:
 ENV OJS_BRANCH ${OJS_BRANCH:-ojs-3.1.0-1}
-RUN echo Downloading code version: $OJS_BRANCH
+
+# RUN echo Downloading code version: $OJS_BRANCH
 # A workarround for the permissions issue: https://github.com/docker-library/php/issues/222
 # RUN sed -ri 's/^www-data:x:82:82:/www-data:x:1000:50:/' /etc/passwd
 # A different workarround: Change alias (www-data) for user ID (33).
@@ -76,7 +77,6 @@ RUN cp config.TEMPLATE.inc.php config.inc.php \
 
 # Setting Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-# COPY --chown=www-data:www-data default.htaccess /var/www/html/.htaccess
 COPY default.htaccess /var/www/html/.htaccess
 
 
