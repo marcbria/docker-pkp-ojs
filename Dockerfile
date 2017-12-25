@@ -4,16 +4,19 @@ LABEL maintainer="Marc Bria Ramírez <marc.bria@uab.cat>"
 # PHP Dependencies 
 RUN apt-get update \
     && apt-get install zlib1g-dev libxml2-dev -y \
-    && apt-get install php5-mysql -y \
     && docker-php-ext-install pdo pdo_mysql \
     && docker-php-ext-install mysqli mysql zip soap
+#    && apt-get install php5-mysql -y 
 
 # Dev stuff 
 RUN apt-get install nano net-tools
 
 # Environment: 
+RUN echo "-> OS: " && cat /etc/issue
+RUN echo "-> PHP: " &&php -v
+
 ENV OJS_BRANCH ${OJS_BRANCH:-ojs-3.1.0-1} 
-RUN echo Downloading code version: $OJS_BRANCH
+RUN echo -> Downloading code version: $OJS_BRANCH
 
 RUN mkdir -p /var/www/html 
 RUN mkdir -p /var/www/files
@@ -69,8 +72,5 @@ RUN chown www-data:www-data /var/www
 
 # DEBUG:
 RUN ls -liash /var/www/html
-RUN cat /etc/issue
-RUN php -v
-
 
 RUN service apache2 restart 
