@@ -20,13 +20,14 @@ RUN echo -> Downloading code version: $OJS_BRANCH
 
 RUN mkdir -p /var/www/html 
 RUN mkdir -p /var/www/files
+RUN mkdir -p /var/www/tmp
 WORKDIR /var/www/html
 
 # Get OJS code from released tarball 
 RUN curl -o ojs.tar.gz -SL http://pkp.sfu.ca/ojs/download/${OJS_BRANCH}.tar.gz \
         && tar -xzf ojs.tar.gz -C /var/www/html --strip=1 \
         && rm ojs.tar.gz \
-        && chown -R www-data:www-data /var/www/html
+        && chown -R 1000:33 /var/www/html
 
 # ALTERNATIVE: Get OJS code from GitHub
 # Cloning and Cleaning OJS and PKP-LIB git repositories
@@ -67,8 +68,8 @@ RUN a2enmod rewrite	# expires
 # A different workarround: Change alias (www-data) for user ID (33).
 # RUN chown 33:33 /var/www
 # Other choice:
-RUN usermod -u 1000 www-data
-RUN chown www-data:www-data /var/www
+# RUN usermod -u 1000 www-data
+# RUN chown www-data:www-data /var/www
 
 # DEBUG:
 RUN ls -liash /var/www/html
