@@ -75,4 +75,5 @@ Any custom php configuration can be made at */etc/php5/conf.d/0-ojs.ini*, there 
 
 ## License
 
-MIT © [Lucas Diedrich](https://github.com/lucasdiedrich)
+Initial work is under MIT © by [Lucas Diedrich](https://github.com/lucasdiedrich)
+This repository is under GPL3© by [Marc Bria](https://github.com/marcbria)
