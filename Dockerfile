@@ -108,14 +108,14 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
             /root/.npm                                          \
             /var/cache/apk/* "
 
-RUN apk add --update --no-cache $PACKAGES && \
-    ln -s /usr/bin/php5 /usr/bin/php && \
+RUN apk add --update --no-cache $PACKAGES 
+RUN ln -s /usr/bin/php5 /usr/bin/php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     # Configure and download code from git
     git config --global url.https://.insteadOf git:// && \
-    git config --global advice.detachedHead false && \
-    git clone --depth 1 --single-branch --branch $OJS_VERSION --progress https://github.com/pkp/ojs.git . && \
-    git submodule update --init --recursive >/dev/null && \
+    git config --global advice.detachedHead false 
+RUN git clone --depth 1 --single-branch --branch $OJS_VERSION --progress https://github.com/pkp/ojs.git . 
+RUN git submodule update --init --recursive >/dev/null 
     # Install NPM and Composer Deps
     composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
