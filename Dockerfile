@@ -110,28 +110,34 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
 
 RUN apk add --update --no-cache $PACKAGES 
 RUN ln -s /usr/bin/php5 /usr/bin/php && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    # Configure and download code from git
-    git config --global url.https://.insteadOf git:// && \
-    git config --global advice.detachedHead false 
-RUN git clone --depth 1 --single-branch --branch $OJS_VERSION --progress https://github.com/pkp/ojs.git . 
-RUN git submodule update --init --recursive >/dev/null 
-    # Install NPM and Composer Deps
-    composer update -d lib/pkp --no-dev && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Configure and download code from git
+RUN git config --global url.https://.insteadOf git:// && \
+    git config --global advice.detachedHead false && \
+    git clone --depth 1 --single-branch --branch $OJS_VERSION --progress https://github.com/pkp/ojs.git . && \
+    git submodule update --init --recursive >/dev/null 
+
+# Install NPM and Composer Deps
+RUN composer update -d lib/pkp --no-dev && \
     composer install -d plugins/paymethod/paypal --no-dev && \
     composer install -d plugins/generic/citationStyleLanguage --no-dev && \
-    npm install -y && npm run build && \
-    # Create directories
-    mkdir /var/www/html/files /run/apache2 && \
+    npm install -y && npm run build
+
+# Create directories
+RUN mkdir /var/www/html/files /run/apache2 && \
     cp config.TEMPLATE.inc.php config.inc.php && \
-    chown -R apache:apache /var/www/* && \
-    # Prepare crontab
-    echo "0 * * * *   ojs-run-scheduled" | crontab - && \
-    # Prepare httpd.conf
-    sed -i -e '\#<Directory />#,\#</Directory>#d' /etc/apache2/httpd.conf && \
-    sed -i -e "s/^ServerSignature.*/ServerSignature Off/" /etc/apache2/httpd.conf && \
-    # Clear the image
-    apk del --no-cache nodejs git && rm -rf $EXCLUDE && \
+    chown -R apache:apache /var/www/* 
+
+# Prepare crontab
+RUN echo "0 * * * *   ojs-run-scheduled" | crontab - 
+
+# Prepare httpd.conf
+RUN sed -i -e '\#<Directory />#,\#</Directory>#d' /etc/apache2/httpd.conf && \
+    sed -i -e "s/^ServerSignature.*/ServerSignature Off/" /etc/apache2/httpd.conf
+
+# Clear the image
+RUN apk del --no-cache nodejs git && rm -rf $EXCLUDE && \
     find . \( -name .gitignore -o -name .gitmodules -o -name .keepme \) -exec rm '{}' \;
 
 COPY files/ojs.conf $OJS_WEB_CONF
