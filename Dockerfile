@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-LABEL maintainer="Lucas G. Diedrich <lucas.diedrich@gmail.com>"
+LABEL maintainer="Marc Bria Ramírez <marc.bria@gmail.com>"
 
 WORKDIR /var/www/html
 
