@@ -6,7 +6,7 @@ WORKDIR /var/www/html
 
 ENV COMPOSER_ALLOW_SUPERUSER=1  \
     SERVERNAME="localhost"      \
-    OJS_VERSION="ojs-stable-3_1_1"     \
+    OJS_VERSION="ojs-stable-3_1_1-2"     \
     OJS_CLI_INSTALL="0"         \
     OJS_DB_HOST="localhost"     \
     OJS_DB_USER="ojs"           \
