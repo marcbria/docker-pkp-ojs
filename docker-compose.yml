@@ -9,11 +9,11 @@ services:
       MYSQL_USER: ojs
       MYSQL_PASSWORD: ojs
   pkp-ojs:
-    image: lucasdiedrich/ojs
+    image: marcbria/docker-pkp-ojs
     container_name : ojs
     restart: always
     ports:
-      - "8083:80"
+      - "8081:80"
       - "8443:443"
 #    volumes:
 #      - "/volumes/ojs/files:/var/www/html/files"
