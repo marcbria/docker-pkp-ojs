@@ -16,7 +16,7 @@ services:
       - "8081:80"
       - "8443:443"
 #    volumes:
-#      - "/volumes/ojs/files:/var/www/html/files"
+#      - "/volumes/ojs/files:/var/www/files"
 #      - "/etc/localtime:/etc/localtime"
 #      - "/volumes/ojs/config.inc.php:/var/www/html/config.inc.php"
     environment:

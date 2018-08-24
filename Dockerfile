@@ -16,7 +16,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
     OJS_CONF="/var/www/html/config.inc.php" \
     PACKAGES="dcron apache2 apache2-ssl apache2-utils php5 php5-fpm php5-cli php5-apache2 php5-zlib \
              php5-json php5-phar php5-openssl php5-mysql php5-curl php5-mcrypt php5-pdo_mysql php5-ctype \
-             php5-gd php5-xml php5-dom php5-iconv curl nodejs git" \
+             php5-gd php5-xml php5-dom php5-iconv curl nodejs git zlib1g-dev php5-zip" \
     EXCLUDE="dbscripts/xml/data/locale/en_US/sample.xml     \
             dbscripts/xml/data/sample.xml					\
             docs/dev										\
@@ -109,6 +109,11 @@ ENV COMPOSER_ALLOW_SUPERUSER=1  \
             /var/cache/apk/* "
 
 RUN apk add --update --no-cache $PACKAGES 
+
+RUN apk install et install -y \
+         zlib1g-dev \
+         && docker-php-ext-install zip
+
 RUN ln -s /usr/bin/php5 /usr/bin/php && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -125,7 +130,7 @@ RUN composer update -d lib/pkp --no-dev && \
     npm install -y && npm run build
 
 # Create directories
-RUN mkdir /var/www/html/files /run/apache2 && \
+RUN mkdir /var/www/files /run/apache2 && \
     cp config.TEMPLATE.inc.php config.inc.php && \
     chown -R apache:apache /var/www/* 
 
@@ -146,6 +151,6 @@ COPY files/bin/* /usr/local/bin/
 
 EXPOSE 80 443
 
-VOLUME [ "/var/www/html/files", "/var/www/html/public" ]
+VOLUME [ "/var/www/files", "/var/www/html/public" ]
 
 CMD ["/bin/sh", "/usr/local/bin/ojs-start"]

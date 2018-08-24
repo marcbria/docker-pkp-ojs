@@ -36,7 +36,7 @@ All version tags can be found at [Docker Hub Tags tab](https://hub.docker.com/r/
 
 |  Volume  | Info |
 |:------:|:-------:|
-| /var/www/html/files  | All uploaded files |
+| /var/www/files  | All uploaded files |
 | /var/www/html/public | All public files |
 | /var/www/html/config.inc.php  | If not provided a new one will be created |
 | /etc/ssl/apache2/server.pem  | SSL **crt** certificate |
@@ -76,4 +76,5 @@ Any custom php configuration can be made at */etc/php5/conf.d/0-ojs.ini*, there 
 ## License
 
 Initial work is under MIT © by [Lucas Diedrich](https://github.com/lucasdiedrich)
-This repository is under GPL3© by [Marc Bria](https://github.com/marcbria)
+Further work and mantainance is under GPL3 by [Marc Bria](https://github.com/marcbria)
+This repository is under GPL3 by [Marc Bria](https://github.com/marcbria)
